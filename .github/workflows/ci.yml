@@ -2,7 +2,7 @@ name: ci
 run-name: ${{ github.actor }} is learning GitHub Actions
 on: 
   push:
-    branches: [main]
+    branches: [main, staging, trying]
 jobs:
   check-bats-version:
     runs-on: ubuntu-latest
