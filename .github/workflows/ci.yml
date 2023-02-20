@@ -1,17 +1,26 @@
-name: ci
+name: CI
 run-name: ${{ github.actor }} is learning GitHub Actions
 on: 
   push:
     branches: [main, staging, trying]
+    
 jobs:
-  check-bats-version:
+  check:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
         with:
           node-version: '14'
-      - name: Build
-        run: npm install -g bats
-      - name: Run tests
-        run: bats -v
+      - run: npm install -g bats
+      - run: bats -v
+
+  ci-success:
+    name: ci
+    if: ${{ success() }}
+    needs:
+      - check
+    runs-on: ubuntu-latest
+    steps:
+      - name: CI succeeded
+        run: exit 0
